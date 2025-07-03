@@ -25,19 +25,26 @@ try {
   const tableHeader = "| Catégorie | Produit | Quantité | Unité | Remarques | À acheter |\n" +
                       "|-----------|---------|----------|-------|-----------|-----------|\n";
 
-  const rows = response.results.map(page => {
+  const rows = response.results.map((page, index) => {
+    const props = page.properties;
     try {
-      const props = page.properties;
       const categorie = props["Catégorie"]?.select?.name || "";
-      const produit = props["Produit"]?.title[0]?.plain_text || "";
-      const quantite = props["Quantité"]?.number || "";
+      const produit = props["Produit"]?.title?.[0]?.plain_text || "";
+      const quantite = props["Quantité"]?.number ?? "";
       const unite = props["Unité"]?.select?.name || "";
-      const remarques = props["Remarques"]?.rich_text[0]?.plain_text || "";
+      const remarques = props["Remarques"]?.rich_text?.[0]?.plain_text || "";
       const aAcheter = props["À acheter"]?.checkbox ? "oui" : "non";
+
+      if (!produit) {
+        console.warn(`⚠️ Ligne ${index + 1} ignorée : champ "Produit" manquant. Catégorie : "${categorie}"`);
+        return null;
+      }
 
       return `| ${categorie} | ${produit} | ${quantite} | ${unite} | ${remarques} | ${aAcheter} |`;
     } catch (error) {
-      console.warn("⚠️ Ligne ignorée à cause d'une erreur :", error.message);
+      const produit = props["Produit"]?.title?.[0]?.plain_text || "(inconnu)";
+      const categorie = props["Catégorie"]?.select?.name || "(inconnue)";
+      console.warn(`⚠️ Ligne ${index + 1} ignorée à cause d'une erreur : ${error.message} → Produit : "${produit}", Catégorie : "${categorie}"`);
       return null;
     }
   }).filter(Boolean);

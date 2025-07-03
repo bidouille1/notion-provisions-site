@@ -1,5 +1,5 @@
 [build]
-  command = "node scripts/generate.js"
+  command = "node scripts/test-visibility.js"
   publish = "./"
 
 [functions]

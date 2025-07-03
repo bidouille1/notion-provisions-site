@@ -1,0 +1,11 @@
+{
+  "name": "notion-provisions-site",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {},
+  "dependencies": {
+    "@notionhq/client": "^2.2.4",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2"
+  }
+}

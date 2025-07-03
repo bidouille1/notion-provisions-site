@@ -1,6 +1,0 @@
-[build]
-  command = "node scripts/generate.js"
-  publish = "./"
-
-[functions]
-  node_bundler = "esbuild"

@@ -1,3 +1,0 @@
-# Notion → Provisions Markdown
-
-Ce projet synchronise une base Notion avec un site statique Netlify...
